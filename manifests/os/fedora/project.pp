@@ -1,6 +1,6 @@
 class forumone::os::fedora::project () {
   firewall { '100 allow http and https access':
-    port   => $forumone::params::ports,
+    port   => $::forumone::ports,
     proto  => tcp,
     action => accept,
   }

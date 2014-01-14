@@ -1,4 +1,4 @@
-class forumone::varnish () {
+class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "256M") {
   case $::operatingsystem {
     /(?i:redhat|centos)/ : {
       yumrepo { "varnish":
@@ -12,12 +12,12 @@ class forumone::varnish () {
   }
 
   service { "varnish":
-    ensure => running,
-    enable  => true,
+    ensure     => running,
+    enable     => true,
     hasrestart => true,
-    hasstatus => true,
-    status => '/usr/sbin/service  varnish status | grep "is running"',
-    require => Package["varnish"],
+    hasstatus  => true,
+    status     => '/usr/sbin/service  varnish status | grep "is running"',
+    require    => Package["varnish"],
   }
 
   package { "varnish":

@@ -1,43 +1,46 @@
 class forumone::ruby (
+  $version = "1.9.3-p484",
+  $user    = "vagrant",
+  $group   = "vagrant",
 ) {
-  rbenv::plugin::rbenvvars { $::forumone::ruby_user:
-    user  => $::forumone::ruby_user,
-    group => $::forumone::ruby_group,
-    home  => "/home/${::forumone::ruby_user}",
-    root  => "/home/${::forumone::ruby_user}/.rbenv"
+  rbenv::plugin::rbenvvars { $user:
+    user  => $user,
+    group => $group,
+    home  => "/home/${user}",
+    root  => "/home/${user}/.rbenv"
   }
 
-  rbenv::install { $::forumone::ruby_user:
-    user => $::forumone::ruby_user,
-    group => $::forumone::ruby_group,
-    home  => "/home/${::forumone::ruby_user}",
-    root => "/home/${::forumone::ruby_user}/.rbenv"
+  rbenv::install { $user:
+    user => $user,
+    group => $group,
+    home  => "/home/${user}",
+    root => "/home/${user}/.rbenv"
   }
 
-  rbenv::compile { $::forumone::ruby_version:
-    user => $::forumone::ruby_user,
-    group => $::forumone::ruby_group,
-    home => "/home/${::forumone::ruby_user}",
-    root => "/home/${::forumone::ruby_user}/.rbenv"
+  rbenv::compile { $version:
+    user => $user,
+    group => $group,
+    home => "/home/${user}",
+    root => "/home/${user}/.rbenv"
   }
 
-  file { "/home/${::forumone::ruby_user}/Gemfile":
+  file { "/home/${user}/Gemfile":
     ensure  => present,
-    path    => "/home/${::forumone::ruby_user}/Gemfile",
-    owner   => $::forumone::ruby_user,
-    group   => $::forumone::ruby_group,
+    path    => "/home/${user}/Gemfile",
+    owner   => $user,
+    group   => $group,
     content => file('/vagrant/Gemfile'),
     backup  => false,
   }
   
-  exec {"${::forumone::ruby_user} bundle":
+  exec {"${user} bundle":
     command   => "bundle",
     cwd       => "/vagrant",
-    user      => $::forumone::ruby_user,
-    group     => $::forumone::ruby_group,
-    path      => "/home/${::forumone::ruby_user}/bin:/home/${::forumone::ruby_user}/.rbenv/shims:/bin:/usr/bin",
+    user      => $user,
+    group     => $group,
+    path      => "/home/${user}/bin:/home/${user}/.rbenv/shims:/bin:/usr/bin",
     creates   => "/vagrant/Gemfile.lock",
-    subscribe => File["/home/${::forumone::ruby_user}/Gemfile"],
-    require   => Rbenvgem["${::forumone::ruby_user}/${::forumone::ruby_version}/bundler/present"]
+    subscribe => File["/home/${user}/Gemfile"],
+    require   => Rbenvgem["${user}/${version}/bundler/present"]
   }
 }

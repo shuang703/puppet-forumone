@@ -1,22 +1,25 @@
+include forumone
+
 define forumone::webserver::vhost (
   $path           = undef,
   $allow_override = ['All'],
   $source         = undef,
-  $fastcgi_pass   = "unix:${forumone::php_fpm_listen}") {
+  $fastcgi_pass   = "unix:${::forumone::webserver::php_fpm_listen}") {
   if $path {
-    if $::forumone::webserver == 'apache' {
+    
+    if $::forumone::webserver::webserver == 'apache' {
       apache::vhost { $name:
-        port          => $::forumone::webserver_port,
+        port          => $::forumone::webserver::port,
         docroot       => $path,
-        docroot_group => $host_gid,
-        docroot_owner => $host_uid,
+        docroot_group => $::host_gid,
+        docroot_owner => $::host_uid,
         directories   => [{
             path           => $path,
             allow_override => $allow_override
           }
           ]
       }
-    } elsif $::forumone::webserver == 'nginx' {
+    } elsif $::forumone::webserver::webserver == 'nginx' {
       if empty($source) {
         nginx::file { "${name}.conf":
           content => template('forumone/webserver/nginx/vhost.erb'),

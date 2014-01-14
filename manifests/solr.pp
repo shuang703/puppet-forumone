@@ -1,19 +1,19 @@
-class forumone::solr () {
-  $version_array = split($::forumone::solr_version, '[.]')
+class forumone::solr ($version = "3.6.2") {
+  $version_array = split($version, '[.]')
   $major_version = $version_array[0]
   $conf = "${major_version}.x"
 
   if $major_version == "4" {
-    $filename = "solr-${::forumone::solr_version}"
+    $filename = "solr-${version}"
     $initd_script = "solr_jetty_7.erb"
     $path = "/opt/${filename}/example"
   } else {
-    $filename = "apache-solr-${::forumone::solr_version}"
+    $filename = "apache-solr-${version}"
     $initd_script = "solr_jetty_6.erb"
     $path = "/opt/${filename}/example/multicore"
   }
 
-  $url = "http://archive.apache.org/dist/lucene/solr/${::forumone::solr_version}/${filename}.tgz"
+  $url = "http://archive.apache.org/dist/lucene/solr/${version}/${filename}.tgz"
 
   # install the java package.
   package { ["java-1.7.0-openjdk"]: ensure => installed, }
@@ -61,7 +61,7 @@ class forumone::solr () {
       mode    => "755",
       content => template("forumone/solr/jetty_logging.erb"),
       require => Exec["forumone::solr::extract"],
-      notify => Service['solr']
+      notify  => Service['solr']
     }
   }
 
@@ -96,4 +96,8 @@ class forumone::solr () {
     content => "</cores></solr>",
     order   => 999
   }
+
+  create_resources('forumone::solr::collection', hiera_hash('forumone::solr::collections', {
+  }
+  ))
 }

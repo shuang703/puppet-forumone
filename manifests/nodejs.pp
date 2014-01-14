@@ -1,4 +1,4 @@
-class forumone::nodejs {
+class forumone::nodejs ($modules = ["grunt-cli"]) {
   case $::operatingsystem {
     /(?i:redhat|centos)/ : {
       package { 'npm': require => Class['epel'] }
@@ -8,7 +8,7 @@ class forumone::nodejs {
     }
   }
 
-  package { $::forumone::node_modules:
+  package { $modules:
     ensure   => present,
     provider => 'npm',
     require  => Package['npm']

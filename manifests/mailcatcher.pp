@@ -1,4 +1,10 @@
-class forumone::mailcatcher () {
+class forumone::mailcatcher (
+  $smtp_ip        = '0.0.0.0',
+  $smtp_port      = '1025',
+  $http_ip        = '0.0.0.0',
+  $http_port      = '1080',
+  $path           = '/usr/bin'
+) {
   case $::osfamily {
     'Debian' : { $packages = ['ruby-dev', 'sqlite3', 'libsqlite3-dev', 'rubygems'] }
     'Redhat' : { $packages = ['ruby-devel', 'sqlite', 'sqlite-devel', 'rubygems'] }
@@ -13,10 +19,10 @@ class forumone::mailcatcher () {
   }
 
   $options = sort(join_keys_to_values({
-    ' --smtp-ip'   => $forumone::mailcatcher_smtp_ip,
-    ' --smtp-port' => $forumone::mailcatcher_smtp_port,
-    ' --http-ip'   => $forumone::mailcatcher_http_ip,
-    ' --http-port' => $forumone::mailcatcher_http_port,
+    ' --smtp-ip'   => $smtp_ip,
+    ' --smtp-port' => $smtp_port,
+    ' --http-ip'   => $http_ip,
+    ' --http-port' => $http_port,
   }
   , ' '))
 
