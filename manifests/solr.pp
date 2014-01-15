@@ -53,21 +53,9 @@ class forumone::solr ($version = "3.6.2") {
     require => Exec["forumone::solr::extract"],
   }
 
-  if $major_version == 3 {
-    file { "/opt/${filename}/example/etc/jetty-logging.xml":
-      ensure  => present,
-      owner   => "root",
-      group   => "root",
-      mode    => "755",
-      content => template("forumone/solr/jetty_logging.erb"),
-      require => Exec["forumone::solr::extract"],
-      notify  => Service['solr']
-    }
-  }
-
   service { 'solr':
     ensure    => running,
-    require   => [Package["java-1.7.0-openjdk"], File["/etc/init.d/solr"]],
+    require   => [Package["java-1.7.0-openjdk"], File["/etc/init.d/solr"], File['/etc/default/jetty']],
     pattern   => 'start.jar',
     hasstatus => false
   }
@@ -76,28 +64,44 @@ class forumone::solr ($version = "3.6.2") {
     ensure => 'directory',
     owner  => 'root',
     group  => 'root',
+    before => Service['solr']
   }
 
-  concat { "${path}/solr.xml":
-    owner  => "root",
-    group  => "root",
-    mode   => 644,
-    notify => Service['solr']
+  if $major_version == 3 {
+    file { "/opt/${filename}/example/etc/jetty-logging.xml":
+      ensure  => present,
+      owner   => "root",
+      group   => "root",
+      mode    => "755",
+      content => template("forumone/solr/jetty_logging.erb"),
+      require => Exec["forumone::solr::extract"],
+      before  => Service['solr'],
+      notify  => Service['solr']
+    }
+
+    concat { "${path}/solr.xml":
+      owner   => "root",
+      group   => "root",
+      mode    => 644,
+      require => Exec["forumone::solr::extract"],
+      before  => Service['solr'],
+      notify  => Service['solr']
+    }
+
+    concat::fragment { "solr_header":
+      target  => "${path}/solr.xml",
+      content => "<solr persistent='false'><cores adminPath='/admin/cores'>",
+      order   => 01
+    }
+
+    concat::fragment { "solr_footer":
+      target  => "${path}/solr.xml",
+      content => "</cores></solr>",
+      order   => 999
+    }
   }
 
-  concat::fragment { "solr_header":
-    target  => "${path}/solr.xml",
-    content => "<solr persistent='false'><cores adminPath='/admin/cores'>",
-    order   => 01
-  }
-
-  concat::fragment { "solr_footer":
-    target  => "${path}/solr.xml",
-    content => "</cores></solr>",
-    order   => 999
-  }
-
-  create_resources('forumone::solr::collection', hiera_hash('forumone::solr::collections', {
-  }
-  ))
+    create_resources('forumone::solr::collection', hiera_hash('forumone::solr::collections', {
+    }
+    ))
 }
