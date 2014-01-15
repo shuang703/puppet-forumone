@@ -1,4 +1,4 @@
-class forumone::php ($modules = ["xml", "gd", "pdo", "mbstring", "mysql", "pecl-memcached", "xcache", "pecl-xdebug"]) {
+class forumone::php ($module = []) {
   if $::forumone::webserver::webserver == 'apache' {
     $service = "httpd"
   } elsif $::forumone::webserver::webserver == 'nginx' {
@@ -18,7 +18,9 @@ class forumone::php ($modules = ["xml", "gd", "pdo", "mbstring", "mysql", "pecl-
 
   create_resources('php::ini', $ini)
 
-  php::module { $modules: notify => Service[$service, 'php-fpm'] }
+  $php_modules = concat(hiera_array('forumone::php::modules', []), $module)
+  
+  php::module { $php_modules: notify => Service[$service, 'php-fpm'] }
 
   package { 'php-fpm': ensure => present }
 
