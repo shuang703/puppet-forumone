@@ -15,7 +15,7 @@ define forumone::solr::file ($template = undef, $directory = undef) {
     group   => "root",
     mode    => "755",
     content => template($file_template),
-    require => File[$directory],
+    require => [ File[$directory], Exec["forumone::solr::extract"] ],
     notify => Service["solr"]
   }
 }
