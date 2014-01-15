@@ -1,22 +1,20 @@
-define forumone::database ($username = 'drupal', $password = 'drupal') {
-  percona::database { $name:
-    ensure  => present,
-    require => Service['mysql']
+class forumone::database (
+  $server        = true,
+  $version       = '5.5',
+  $manage_repo   = true,
+  $configuration = {
+    'mysqld/log_bin' => 'absent'
+  }
+) {
+
+  class { 'percona':
+    server          => $server,
+    percona_version => $version,
+    manage_repo     => $manage_repo,
+    configuration   => $configuration
   }
 
-  percona::rights { "${username}@localhost/${name}":
-    priv     => 'all',
-    user     => $username,
-    database => $name,
-    password => $password,
-    host     => 'localhost'
+  create_resources('forumone::database::database', hiera_hash('forumone::databases', {
   }
-
-  percona::rights { "${username}@%/${name}":
-    priv     => 'all',
-    user     => $username,
-    database => $name,
-    password => $password,
-    host     => '%'
-  }
+  ))
 }
