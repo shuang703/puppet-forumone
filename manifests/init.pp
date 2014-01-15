@@ -1,9 +1,4 @@
-class forumone (
-  $ports                 = $forumone::params::ports,
-  $percona_install       = $forumone::params::percona_install,
-  $percona_manage_repo   = $forumone::params::percona_manage_repo,
-  $percona_version       = $forumone::params::percona_version
-) inherits forumone::params {
+class forumone ($ports = [80, 443, 8080, 8081, 18983, 8983, 3306, 13306, 1080],) {
   case $::operatingsystem {
     /(?i:redhat|centos)/ : {
       class { 'forumone::os::fedora::project': }
@@ -23,23 +18,5 @@ class forumone (
     content => template("forumone/ssh_config.erb"),
     owner   => "vagrant",
     mode    => 600
-  }
-
-  if $percona_install == true {
-    file { '/etc/mysql': ensure => 'directory', }
-
-    file { '/etc/mysql/conf.d': ensure => 'directory', }
-
-    class { 'percona':
-      server             => true,
-      percona_version    => $percona_version,
-      manage_repo        => $percona_manage_repo,
-      config_include_dir => '/etc/mysql/conf.d',
-      configuration      => {
-        'mysqld/log_bin' => 'absent'
-      }
-    }
-    
-    create_resources('forumone::database', hiera_hash('forumone::databases', {}))
   }
 }
