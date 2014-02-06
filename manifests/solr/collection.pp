@@ -16,36 +16,33 @@ define forumone::solr::collection ($order = 10, $files = undef) {
       notify  => Service['solr']
     }
 
-    if $files == undef {
-      if $::forumone::solr::major_version == "4" {
-        $solr_files = [
-          "elevate.xml",
-          "protwords.txt",
-          "mapping-ISOLatin1Accent.txt",
-          "schema_extra_fields.xml",
-          "schema_extra_types.xml",
-          "schema.xml",
-          "solrconfig_extra.xml",
-          "solrconfig.xml",
-          "solrcore.properties",
-          "stopwords.txt",
-          "synonyms.txt"]
-      } elsif $::forumone::solr::major_version == "3" {
-        $solr_files = [
-          "elevate.xml",
-          "protwords.txt",
-          "mapping-ISOLatin1Accent.txt",
-          "schema_extra_fields.xml",
-          "schema_extra_types.xml",
-          "schema.xml",
-          "solrconfig_extra.xml",
-          "solrconfig.xml",
-          "solrcore.properties",
-          "stopwords.txt",
-          "synonyms.txt"]
-      }
-    } else {
-      $solr_files = $files
+  if $files == undef {
+    if $::forumone::solr::major_version == "4" {
+      $solr_files = [
+        "${name}/elevate.xml",
+        "${name}/protwords.txt",
+        "${name}/mapping-ISOLatin1Accent.txt",
+        "${name}/schema_extra_fields.xml",
+        "${name}/schema_extra_types.xml",
+        "${name}/schema.xml",
+        "${name}/solrconfig_extra.xml",
+        "${name}/solrconfig.xml",
+        "${name}/solrcore.properties",
+        "${name}/stopwords.txt",
+        "${name}/synonyms.txt"]
+    } elsif $::forumone::solr::major_version == "3" {
+      $solr_files = [
+        "${name}/elevate.xml",
+        "${name}/protwords.txt",
+        "${name}/mapping-ISOLatin1Accent.txt",
+        "${name}/schema_extra_fields.xml",
+        "${name}/schema_extra_types.xml",
+        "${name}/schema.xml",
+        "${name}/solrconfig_extra.xml",
+        "${name}/solrconfig.xml",
+        "${name}/solrcore.properties",
+        "${name}/stopwords.txt",
+        "${name}/synonyms.txt"]
     }
 
     forumone::solr::file { $solr_files:
