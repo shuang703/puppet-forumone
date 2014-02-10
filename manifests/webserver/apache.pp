@@ -2,6 +2,7 @@ class forumone::webserver::apache {
   class { '::apache':
     default_vhost => false,
     mpm_module    => false,
+    sendfile      => 'Off'
   }
 
   class { 'apache::mod::prefork':
