@@ -100,8 +100,4 @@ class forumone::solr ($version = "3.6.2") {
       order   => 999
     }
   }
-
-    create_resources('forumone::solr::collection', hiera_hash('forumone::solr::collections', {
-    }
-    ))
 }
