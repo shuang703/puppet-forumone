@@ -1,4 +1,6 @@
 define forumone::solr::collection ($order = 10, $files = undef) {
+  include forumone::solr
+
   file { "${::forumone::solr::path}/${name}":
     ensure  => 'directory',
     require => Exec["forumone::solr::extract"]
