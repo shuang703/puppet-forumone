@@ -16,11 +16,7 @@ class forumone::database (
     configuration      => $configuration,
     require            => File['/etc/mysql/conf.d']
   }
-
-  create_resources('forumone::database::database', hiera_hash('forumone::databases', {
-  }
-  ))
-
+  
   create_resources('percona::conf', hiera_hash('percona::conf', {
   }
   ))

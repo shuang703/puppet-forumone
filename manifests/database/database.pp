@@ -1,4 +1,6 @@
 define forumone::database::database ($username = 'drupal', $password = 'drupal') {
+  include forumone::database
+  
   percona::database { $name:
     ensure  => present,
     require => Class['percona']
