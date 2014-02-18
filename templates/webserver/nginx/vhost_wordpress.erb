@@ -1,5 +1,5 @@
 server {
-	server_name __HOSTNAME__.dev.forumone.com;
+	server_name localhost;
 	listen <%= scope.lookupvar('forumone::webserver::port') %>;
 	root <%= path %>; ## <-- Your only path reference.
 	access_log  /var/log/nginx/<%= name %>.log  main;
