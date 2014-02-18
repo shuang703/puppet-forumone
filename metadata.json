@@ -12,9 +12,17 @@
     {"name":"puppetlabs/apt","version_requirement":"1.1.x"},
     {"name":"puppetlabs/concat","version_requirement":"1.0.x"},
     {"name":"stahnma/epel","version_requirement":"0.0.5"},
+    {"version_requirement":"0.4.x","name":"puppetlabs/firewall"},
     {"name":"puppetlabs/firewall","version_requirement":"0.4.x"},
+    {"version_requirement":"0.1.x","name":"thias/memcached"},
     {"name":"thias/memcached","version_requirement":"0.1.x"},
-    {"name":"fsalum/redis","version_requirement":"0.0.9"}
+    {"version_requirement":"0.0.9","name":"fsalum/redis"},
+    {"version_requirement":"0.0.9","name":"fsalum-redis"},
+    {"version_requirement":"0.1.x","name":"fsalum/redis"},
+    {"name":"fsalum/redis","version_requirement":"0.0.9"},
+    {"name":"puppetlabs/nodejs","version_requirement":"0.4.x"},
+    {"name":"thias/php","version_requirement":"0.3.x"},
+    {"name":"alup/rbenv","version_requirement":"1.2.x"}
   ],
   "types": [],
   "checksums": {},
