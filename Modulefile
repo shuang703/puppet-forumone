@@ -8,10 +8,10 @@ description 'Creates an idiosyncratic development environment for PHP or Javascr
 project_page ''
 
 ## Add dependencies, if any:
-dependency 'puppetlabs/apache', '~>0.9'
-dependency 'puppetlabs/apt', '~>1.1'
-dependency 'puppetlabs/concat', '~>1.0'
+dependency 'puppetlabs/apache', '0.9.x'
+dependency 'puppetlabs/apt', '1.1.x'
+dependency 'puppetlabs/concat', '1.0.x'
 dependency 'stahnma/epel', '0.0.5'
-dependency 'puppetlabs/firewall', '~>0.4'
-dependency 'thias/memcached', '~>0.1'
-dependency 'fsalum/redis', '~>0.0.9'
+dependency 'puppetlabs/firewall', '0.4.x'
+dependency 'thias/memcached', '0.1.x'
+dependency 'fsalum/redis', '0.0.9'
