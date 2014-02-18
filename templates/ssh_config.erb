@@ -1,2 +1,13 @@
-host dev.forumone.com
-  user <%= scope.lookupvar('vagrant_user') %>
+Host <%= @title %>
+  HostName <%= @hostname %>
+  Port <%= @port %>
+  User <%= @remote_user %>
+<% if @proxy_command -%>
+  ProxyCommand <%= @proxy_command %>
+<% end %>
+<% if @connect_timeout -%>
+  ConnectTimeout <%=  @connect_timeout %>
+<% end %>
+<% if @forward_agent -%>
+  ForwardAgent <%= @forward_agent -%>
+<% end %>
