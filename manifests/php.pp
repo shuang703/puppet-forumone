@@ -1,10 +1,10 @@
-class forumone::php ($module = []) {
+class forumone::php ($module = [], $prefix = 'php') {
   if $::forumone::webserver::webserver == 'apache' {
     $service = "httpd"
   } elsif $::forumone::webserver::webserver == 'nginx' {
     $service = "nginx"
   }
-
+  
   # PHP settings and modules
   $ini_settings = hiera_hash('php::ini', {
   }
@@ -19,15 +19,15 @@ class forumone::php ($module = []) {
   create_resources('php::ini', $ini)
 
   $php_modules = concat(hiera_array('forumone::php::modules', []), $module)
-  
+
   php::module { $php_modules: notify => Service[$service, 'php-fpm'] }
 
-  package { 'php-fpm': ensure => present }
+  package { "${::forumone::php::prefix}-fpm": ensure => present }
 
-  service { 'php-fpm':
+  service { "php-fpm":
     ensure  => running,
     enable  => true,
-    require => Package["php-fpm"]
+    require => Package["${::forumone::php::prefix}-fpm"]
   }
 
   file { '/etc/php-fpm.d/www.conf':
@@ -36,7 +36,7 @@ class forumone::php ($module = []) {
     group   => "root",
     content => template("forumone/fpm_pool.erb"),
     notify  => Service["php-fpm"],
-    require => Package["php-fpm"]
+    require => Package["${::forumone::php::prefix}-fpm"]
   }
 
   create_resources('php::module::ini', hiera_hash('php::modules', {
