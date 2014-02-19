@@ -1,24 +1,26 @@
-class forumone::drush {
-  package { "${::forumone::php::prefix}-pear": }
+class forumone::drush ($version = '7.x-5.9') {
+  $filename = "drush-${version}.tar.gz"
 
-  pear { "Console_Table":
-    package    => "Console_Table",
-    creates    => "/usr/share/php/test/Console_Table",
-    require    => Package["${::forumone::php::prefix}-pear"],
-    php_prefix => $::forumone::php::prefix
+  # Download drush
+  exec { 'forumone::drush::download':
+    command => "wget --directory-prefix=/opt http://ftp.drupal.org/files/projects/${filename}",
+    path    => '/usr/bin',
+    require => Package["java-1.7.0-openjdk"],
+    creates => "/opt/${filename}",
+    timeout => 4800,
   }
 
-  pear { "drush":
-    package    => "drush/drush",
-    creates    => "/usr/bin/drush",
-    channel    => "pear.drush.org",
-    php_prefix => $::forumone::php::prefix
+  # extract from the solr archive
+  exec { 'forumone::drush::extract':
+    command => "tar -zxvf /opt/${filename}.tgz -C /opt",
+    path    => ["/bin"],
+    require => [Exec["forumone::solr::download"]],
+    creates => '/opt/drush/LICENSE.txt',
   }
 
-  pear { "Archive_Tar":
-    package    => "Archive_Tar",
-    creates    => "/usr/share/doc/php5-common/PEAR/Archive_Tar",
-    require    => Package["${::forumone::php::prefix}-pear"],
-    php_prefix => $::forumone::php::prefix
+  file { '/usr/local/bin/drush':
+    ensure  => 'link',
+    target  => '/opt/drush/drush',
+    require => Exec['forumone::drush::extract']
   }
 }
