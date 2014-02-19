@@ -18,6 +18,18 @@ class forumone::drush ($version = '7.x-5.9') {
     creates => '/opt/drush/LICENSE.txt',
   }
 
+  file { '/opt/drush':
+    ensure  => directory,
+    owner   => 'vagrant',
+    require => Exec['forumone::drush::extract']
+  }
+
+  file { '/opt/drush/lib':
+    ensure  => directory,
+    owner   => 'vagrant',
+    require => File['/opt/drush']
+  }
+
   file { '/usr/local/bin/drush':
     ensure  => 'link',
     target  => '/opt/drush/drush',
