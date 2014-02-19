@@ -11,12 +11,6 @@ define forumone::solr::collection ($order = 10, $files = undef) {
     require => File["${::forumone::solr::path}/${name}"]
   }
 
-  concat::fragment { "solr_collection_${name}":
-    target  => "${::forumone::solr::path}/solr.xml",
-    content => "<core name='${name}' instanceDir='${name}' />",
-    notify  => Service['solr']
-  }
-
   if $files == undef {
     if $::forumone::solr::major_version == "4" {
       $solr_files = [
@@ -32,6 +26,11 @@ define forumone::solr::collection ($order = 10, $files = undef) {
         "${name}/stopwords.txt",
         "${name}/synonyms.txt"]
     } elsif $::forumone::solr::major_version == "3" {
+      concat::fragment { "solr_collection_${name}":
+        target  => "${::forumone::solr::path}/solr.xml",
+        content => "<core name='${name}' instanceDir='${name}' />",
+        notify  => Service['solr']
+      }
       $solr_files = [
         "${name}/elevate.xml",
         "${name}/protwords.txt",
