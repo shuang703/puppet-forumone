@@ -12,7 +12,7 @@ class forumone::drush ($version = '7.x-5.9') {
 
   # extract from the solr archive
   exec { 'forumone::drush::extract':
-    command => "tar -zxvf /opt/${filename}.tgz -C /opt",
+    command => "tar -zxvf /opt/${filename} -C /opt",
     path    => ["/bin"],
     require => [Exec["forumone::solr::download"]],
     creates => '/opt/drush/LICENSE.txt',
