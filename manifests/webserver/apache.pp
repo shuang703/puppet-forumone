@@ -1,4 +1,6 @@
 class forumone::webserver::apache {
+  include '::forumone::php'
+  
   class { '::apache':
     default_vhost => false,
     mpm_module    => false,
