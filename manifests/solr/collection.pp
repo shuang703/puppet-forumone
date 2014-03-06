@@ -25,6 +25,12 @@ define forumone::solr::collection ($order = 10, $files = undef) {
         "${name}/solrcore.properties",
         "${name}/stopwords.txt",
         "${name}/synonyms.txt"]
+
+        forumone::solr::file { "${name}/core.properties":
+          template   => "forumone/solr/conf/${::forumone::solr::conf}",
+          directory  => "${::forumone::solr::path}/${name}",
+          collection => $name
+        }
     } elsif $::forumone::solr::major_version == "3" {
       concat::fragment { "solr_collection_${name}":
         target  => "${::forumone::solr::path}/solr.xml",
@@ -49,7 +55,8 @@ define forumone::solr::collection ($order = 10, $files = undef) {
   }
 
   forumone::solr::file { $solr_files:
-    template  => "forumone/solr/conf/${::forumone::solr::conf}",
-    directory => "${::forumone::solr::path}/${name}/conf"
+    template   => "forumone/solr/conf/${::forumone::solr::conf}",
+    directory  => "${::forumone::solr::path}/${name}/conf",
+    collection => $name
   }
 }
