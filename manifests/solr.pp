@@ -6,7 +6,7 @@ class forumone::solr ($version = "3.6.2") {
   if $major_version == "4" {
     $filename = "solr-${version}"
     $initd_script = "solr_jetty_7.erb"
-    $path = "/opt/${filename}/example"
+    $path = "/opt/${filename}/example/solr"
   } else {
     $filename = "apache-solr-${version}"
     $initd_script = "solr_jetty_6.erb"
