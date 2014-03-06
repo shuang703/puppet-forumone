@@ -1,4 +1,4 @@
-define forumone::solr::file ($template = undef, $directory = undef) {
+define forumone::solr::file ($template = undef, $directory = undef, $collection = undef) {
   if !$template {
     $template = 'forumone/solr'
   }
