@@ -19,4 +19,15 @@ class forumone::webserver::apache {
   class { 'php::mod_php5':
   }
 
+# Remove nginx if it's installed
+  include '::nginx::params'
+
+  package { $::nginx::params::package:
+    ensure => purged,
+  }
+
+  service { $::nginx::params::service:
+    enable    => false,
+    ensure    => false
+  }
 }

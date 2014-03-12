@@ -4,4 +4,16 @@ class forumone::webserver::nginx () {
     worker_processes => $::forumone::webserver::nginx_worker_processes,
     sendfile         => 'off'
   }
+
+# Remove apache if it's installed  
+  include '::apache::params'
+
+  class { '::apache::package':
+    ensure   => 'purged'
+  }
+
+  class { '::apache::service':
+    service_enable  => false,
+    service_ensure  => false
+  }
 }
