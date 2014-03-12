@@ -4,10 +4,8 @@ define forumone::webserver::vhost (
   $path           = undef,
   $allow_override = ['All'],
   $source         = undef,
-  $fastcgi_pass   = "unix:${::forumone::webserver::php_fpm_listen}",
-  $platform       = 'drupal') {
+  $fastcgi_pass   = "unix:${::forumone::webserver::php_fpm_listen}") {
   if $path {
-    
     if $::forumone::webserver::webserver == 'apache' {
       apache::vhost { $name:
         port          => $::forumone::webserver::port,
@@ -23,7 +21,8 @@ define forumone::webserver::vhost (
     } elsif $::forumone::webserver::webserver == 'nginx' {
       if empty($source) {
         nginx::file { "${name}.conf":
-          content => template("forumone/webserver/nginx/vhost_${platform}.erb"),
+          content => inline_template(file("/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_${::platform}.erb", "/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_html.erb"
+          )),
           notify  => Service['nginx']
         }
       } else {
