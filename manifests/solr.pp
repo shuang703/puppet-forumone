@@ -55,6 +55,7 @@ class forumone::solr ($version = "3.6.2") {
 
   service { 'solr':
     ensure    => running,
+    enable    => true,
     require   => [Package["java-1.7.0-openjdk"], File["/etc/init.d/solr"], File['/etc/default/jetty']],
     pattern   => 'start.jar',
     hasstatus => false
