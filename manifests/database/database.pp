@@ -25,7 +25,7 @@ define forumone::database::database ($username = undef, $password = undef) {
     priv     => 'all',
     user     => $username,
     database => $name,
-    password => $password,
+    password => $db_password,
     host     => '%'
   }
 }
