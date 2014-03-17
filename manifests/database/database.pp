@@ -1,8 +1,11 @@
 define forumone::database::database ($username = undef, $password = undef) {
   include forumone::database
 
-  if !$password {
-    $password = $username
+  if $password {
+    $db_password = $password
+  }
+  else {
+    $db_password = $username
   }
 
   percona::database { $name:
@@ -14,7 +17,7 @@ define forumone::database::database ($username = undef, $password = undef) {
     priv     => 'all',
     user     => $username,
     database => $name,
-    password => $password,
+    password => $db_password,
     host     => 'localhost'
   }
 
