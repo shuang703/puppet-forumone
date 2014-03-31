@@ -1,4 +1,4 @@
-define forumone::solr::file ($template = undef, $config_directory, $directory = undef, $collection = undef) {
+define forumone::solr::file ($template = undef, $config_directory = undef, $directory = undef, $collection = undef) {
   $name_array = split($name, '[/]')
   $file_array = split($name_array[1], '[.]')
   $file_array_pieces = delete_at($file_array, (size($file_array) - 1))
