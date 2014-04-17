@@ -1,4 +1,4 @@
-class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "256M") {
+class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "256M", $template = undef) {
   case $::operatingsystem {
     /(?i:redhat|centos)/ : {
       yumrepo { "varnish":
@@ -9,6 +9,13 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
         gpgcheck => 0
       }
     }
+  }
+
+  if !$template {
+    $file = '/etc/puppet/modules/forumone/templates/varnish/default.erb'
+  }
+  else {
+    $file = $template
   }
 
   service { "varnish":
@@ -46,7 +53,7 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
     owner   => "root",
     group   => "root",
     mode    => "644",
-    content => template("forumone/varnish/default.erb"),
+    content => inline_template(file($file)),
     require => Package["varnish"],
     notify  => Service["varnish"],
   }
