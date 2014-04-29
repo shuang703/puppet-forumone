@@ -12,6 +12,10 @@ class forumone::os::fedora::project () {
     gpgcheck => 0
   }
 
+  package { 'yum-plugin-fastestmirror':
+    ensure   => present
+  }
+
   class { "epel":
   }
 }
