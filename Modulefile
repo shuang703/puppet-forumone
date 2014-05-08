@@ -1,5 +1,5 @@
 name    'puppet-forumone'
-version '1.1.15'
+version '1.1.17'
 source ''
 author 'William Hurley'
 license 'GPL v2'
