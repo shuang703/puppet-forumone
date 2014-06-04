@@ -4,7 +4,9 @@ class forumone::webserver::apache {
   class { '::apache':
     default_vhost => false,
     mpm_module    => false,
-    sendfile      => 'Off'
+    sendfile      => 'Off',
+    user          => $::puppet_user,
+    group         => $::puppet_group
   }
 
   class { 'apache::mod::prefork':

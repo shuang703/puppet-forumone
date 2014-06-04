@@ -11,7 +11,8 @@ define forumone::ssh_config::host (
   $ssh_config_file = "${ssh_config_dir_prefix}/config"
 
   ensure_resource('concat', $ssh_config_file, {
-    owner => $unix_user
+    owner          => $unix_user,
+    ensure_newline => true
   }
   )
 

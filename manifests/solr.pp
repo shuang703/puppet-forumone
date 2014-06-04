@@ -19,17 +19,21 @@ class forumone::solr ($version = "3.6.2") {
   package { ["java-1.7.0-openjdk"]: ensure => installed, }
 
   # Download apache solr
+  file { "/tmp/vagrant-cache":
+    ensure  => "directory"
+  }
+
   exec { "forumone::solr::download":
-    command => "wget --directory-prefix=/opt ${url}",
+    command => "wget --directory-prefix=/tmp/vagrant-cache ${url}",
     path    => '/usr/bin',
-    require => Package["java-1.7.0-openjdk"],
-    creates => "/opt/${filename}.tgz",
+    require => [ Package["java-1.7.0-openjdk"], File["/tmp/vagrant-cache"] ],
+    creates => "/tmp/vagrant-cache/${filename}.tgz",
     timeout => 4800,
   }
 
   # extract from the solr archive
   exec { "forumone::solr::extract":
-    command => "tar -zxvf /opt/${filename}.tgz -C /opt",
+    command => "tar -zxvf /tmp/vagrant-cache/${filename}.tgz -C /opt",
     path    => ["/bin"],
     require => [Exec["forumone::solr::download"]],
     creates => "/opt/${filename}/LICENSE.txt",
