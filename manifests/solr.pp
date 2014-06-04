@@ -33,7 +33,7 @@ class forumone::solr ($version = "3.6.2") {
 
   # extract from the solr archive
   exec { "forumone::solr::extract":
-    command => "tar -zxvf /opt/${filename}.tgz -C /opt",
+    command => "tar -zxvf /tmp/vagrant-cache/${filename}.tgz -C /opt",
     path    => ["/bin"],
     require => [Exec["forumone::solr::download"]],
     creates => "/opt/${filename}/LICENSE.txt",
