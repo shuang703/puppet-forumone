@@ -46,6 +46,7 @@ class forumone::solr ($version = "3.6.2") {
     mode    => "644",
     content => template("forumone/solr/etc_default.erb"),
     require => Exec["forumone::solr::extract"],
+    notify  => Service['solr']
   }
 
   file { "/etc/init.d/solr":
