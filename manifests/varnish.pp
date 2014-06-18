@@ -45,7 +45,7 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
     mode    => "644",
     content => template("forumone/varnish/etc_default.erb"),
     require => Package["varnish"],
-    notify  => Service["varnish"],
+    notify  => Exec["varnish-restart"],
   }
 
   file { "/etc/varnish/default.vcl":
@@ -55,7 +55,7 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
     mode    => "644",
     content => inline_template(file($file)),
     require => Package["varnish"],
-    notify  => Service["varnish"],
+    notify  => Exec["varnish-restart"],
   }
 
   file { "/etc/varnish/acl.vcl":
@@ -65,7 +65,7 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
     mode    => "644",
     content => template("forumone/varnish/acl.erb"),
     require => Package["varnish"],
-    notify  => Service["varnish"],
+    notify  => Exec["varnish-restart"],
   }
 
   file { "/etc/varnish/backends.vcl":
@@ -75,6 +75,6 @@ class forumone::varnish ($backend_port = "8080", $bind = "*:80", $cache_size = "
     mode    => "644",
     content => template("forumone/varnish/backends.erb"),
     require => Package["varnish"],
-    notify  => Service["varnish"],
+    notify  => Exec["varnish-restart"],
   }
 }
