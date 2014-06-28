@@ -41,5 +41,4 @@ class forumone::ruby ($version = "1.9.3-p484", $user = "vagrant", $group = "vagr
 	    require   => Rbenvgem["${user}/${version}/bundler/present"]
 	  }
   }
-  }
 }
