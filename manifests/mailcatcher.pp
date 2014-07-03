@@ -1,10 +1,9 @@
 class forumone::mailcatcher (
-  $smtp_ip        = '0.0.0.0',
-  $smtp_port      = '1025',
-  $http_ip        = '0.0.0.0',
-  $http_port      = '1080',
-  $path           = '/usr/bin'
-) {
+  $smtp_ip   = '0.0.0.0',
+  $smtp_port = '1025',
+  $http_ip   = '0.0.0.0',
+  $http_port = '1080',
+  $path      = '/usr/bin') {
   case $::osfamily {
     'Debian' : { $packages = ['ruby-dev', 'sqlite3', 'libsqlite3-dev', 'rubygems'] }
     'Redhat' : { $packages = ['ruby-devel', 'sqlite', 'sqlite-devel', 'rubygems'] }
@@ -26,14 +25,22 @@ class forumone::mailcatcher (
   }
   , ' '))
 
-  package { $packages: ensure => 'present' } ->
-  package { 'tilt':
-    ensure   => '1.4.1',
-    provider => 'gem'
-  } ->
-  package { 'mailcatcher':
-    ensure   => 'present',
-    provider => 'gem'
+  package { $packages: ensure => 'present' }
+
+  rbenv::gem { 'tilt':
+    user    => $::forumone::ruby::user,
+    home    => $::forumone::ruby::home,
+    root    => $::forumone::ruby::home,
+    ruby    => $::forumone::ruby::version,
+    require => Package[$packages]
+  }
+
+  rbenv::gem { 'mailcatcher':
+    user    => $::forumone::ruby::user,
+    home    => $::forumone::ruby::home,
+    root    => $::forumone::ruby::home,
+    ruby    => $::forumone::ruby::version,
+    require => Rbenvgem["${::forumone::ruby::user}/${::forumone::ruby::version}/tilt/present"]
   }
 
   file { "/etc/default/mailcatcher":
@@ -50,13 +57,13 @@ class forumone::mailcatcher (
     group   => "root",
     mode    => "755",
     content => template("forumone/mailcatcher/mailcatcher.erb"),
-    require => Package["mailcatcher"]
+    require => Rbenvgem["${::forumone::ruby::user}/${::forumone::ruby::version}/mailcatcher/present"]
   }
 
   service { 'mailcatcher':
-    ensure  => running,
+    ensure    => running,
     hasstatus => false,
-    enable => true,
-    require => File["/etc/init.d/mailcatcher"]
+    enable    => true,
+    require   => File["/etc/init.d/mailcatcher"]
   }
 }
