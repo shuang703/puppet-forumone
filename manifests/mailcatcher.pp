@@ -4,6 +4,8 @@ class forumone::mailcatcher (
   $http_ip   = '0.0.0.0',
   $http_port = '1080',
   $path      = '/usr/bin') {
+  include forumone::ruby
+
   case $::osfamily {
     'Debian' : { $packages = ['ruby-dev', 'sqlite3', 'libsqlite3-dev', 'rubygems'] }
     'Redhat' : { $packages = ['ruby-devel', 'sqlite', 'sqlite-devel', 'rubygems'] }
