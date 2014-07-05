@@ -16,7 +16,7 @@ class forumone::solr ($version = "3.6.2") {
   $url = "http://archive.apache.org/dist/lucene/solr/${version}/${filename}.tgz"
 
   # install the java package.
-  package { ["java-1.7.0-openjdk"]: ensure => installed, }
+  package { ["java-1.7.0-openjdk", "wget"]: ensure => installed, }
 
   # Download apache solr
   file { "/tmp/vagrant-cache":
