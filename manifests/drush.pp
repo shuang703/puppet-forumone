@@ -7,6 +7,7 @@ class forumone::drush ($version = '7.x-5.9') {
     path    => '/usr/bin',
     creates => "/opt/${filename}",
     timeout => 4800,
+    require => Package["wget"]
   }
 
   # extract from the solr archive
