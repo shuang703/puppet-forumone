@@ -26,7 +26,7 @@ define forumone::webserver::vhost (
           notify  => Service['nginx']
         }
       } else {
-        nginx::file { 'localhost':
+        nginx::file { "${name}.conf":
           source => $source,
           notify => Service['nginx']
         }
