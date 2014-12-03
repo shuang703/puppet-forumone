@@ -1,6 +1,7 @@
 include forumone
 
 define forumone::webserver::vhost (
+  $vhost_name     = localhost,
   $path           = undef,
   $allow_override = ['All'],
   $source         = undef,
@@ -8,6 +9,7 @@ define forumone::webserver::vhost (
   if $path {
     if $::forumone::webserver::webserver == 'apache' {
       apache::vhost { $name:
+        vhost_name    => $vhost_name,
         port          => $::forumone::webserver::port,
         docroot       => $path,
         docroot_group => $::host_gid,
