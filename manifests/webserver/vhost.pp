@@ -11,10 +11,7 @@ define forumone::webserver::vhost (
     if $::forumone::webserver::webserver == 'apache' {
       apache::vhost { $name:
         servername    => $servername,
-        aliases [{ $aliases:
-          alias     => $name,
-          path      => $destination
-        }]
+        aliases       => $aliases,
         port          => $::forumone::webserver::port,
         docroot       => $path,
         docroot_group => $::host_gid,
