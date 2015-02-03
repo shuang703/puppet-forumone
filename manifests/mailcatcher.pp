@@ -5,7 +5,8 @@ class forumone::mailcatcher (
   $http_port      = '1080',
   $path           = '/usr/bin',
   $version_i18n   = '0.6.11',
-  $version_tilt   = '1.4.1'
+  $version_tilt   = '1.4.1',
+  $version_mailcatcher = '0.5.12'
 ) {
   case $::osfamily {
     'Debian' : { $packages = ['ruby-dev', 'sqlite3', 'libsqlite3-dev', 'rubygems'] }
@@ -38,7 +39,7 @@ class forumone::mailcatcher (
     provider => 'gem'
   } ->
   package { 'mailcatcher':
-    ensure   => 'present',
+    ensure   => $version_mailcatcher,
     provider => 'gem'
   }
 
