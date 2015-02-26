@@ -113,7 +113,7 @@ if (req.url ~ "^/nginx_status") {
   if (req.http.Cookie) {
     set req.http.Cookie = ";" + req.http.Cookie;
     set req.http.Cookie = regsuball(req.http.Cookie, "; +", ";");
-    set req.http.Cookie = regsuball(req.http.Cookie, ";(S{1,2}ESS[a-z0-9]+|NO_CACHE|PHPSESS|cfs_session|wordpress_logged_in_[a-z0-9]+|wordpress_[a-z0-9]+|wordpress_test_cookie.*+)=", "; \1=");
+    set req.http.Cookie = regsuball(req.http.Cookie, ";(S{1,2}ESS[a-z0-9]+|NO_CACHE|PHPSESS|XDEBUG_[_A-Z]+|cfs_session|wordpress_logged_in_[a-z0-9]+|wordpress_[a-z0-9]+|wordpress_test_cookie.*+)=", "; \1=");
     set req.http.Cookie = regsuball(req.http.Cookie, ";[^ ][^;]*", "");
     set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
 
