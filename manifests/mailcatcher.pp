@@ -38,11 +38,12 @@ class forumone::mailcatcher (
   }
 
   ruby::bundle { 'mailcatcher':
-    cwd     => '/root',
-    subscribe => File['/root/Gemfile'],
-    require => Package['bundler'],
-    user => 'root',
-    path => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin'
+    cwd         => '/root',
+    subscribe   => File['/root/Gemfile'],
+    require     => Package['bundler'],
+    user        => 'root',
+    path        => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
+    refreshonly => true
   }
 
   file { "/etc/default/mailcatcher":
