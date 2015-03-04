@@ -33,9 +33,16 @@ class forumone::mailcatcher (
     provider => 'gem'
   }
 
+  file { "/root/Gemfile":
+    source => "/etc/puppet/modules/forumone/templates/mailcatcher/Gemfile"
+  }
+
   ruby::bundle { 'mailcatcher':
-    cwd     => '/etc/puppet/modules/forumone/templates/mailcatcher',
-    require => Package['bundler']
+    cwd     => '/root',
+    subscribe => File['/root/Gemfile'],
+    require => Package['bundler'],
+    user => 'root',
+    path => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin'
   }
 
   file { "/etc/default/mailcatcher":
