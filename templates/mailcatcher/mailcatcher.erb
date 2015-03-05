@@ -28,9 +28,7 @@ start() {
 	if [ $STATUS -ne 0 ] ;
     then
 		echo "Starting $APP_NAME..."
-		nohup $APP_PRE_OPTION $APP_PATH/$APP_FILE $APP_POST_OPTION > $APP_LOGS/$APP_FILENAME.log 2> $APP_LOGS/$APP_FILENAME.err < /dev/null &
-		# You can un-comment next line to see what command is exactly executed
-		# echo "nohup $APP_PRE_OPTION $APP_PATH/$APP_FILE $APP_POST_OPTION > $APP_LOGS/$APP_FILENAME.out 2> $APP_LOGS/$APP_FILENAME.err < /dev/null &"
+		cd $GEMFILE_LOCATION && su - -c "$APP_PRE_OPTION $APP_FILE $APP_POST_OPTION > $APP_LOGS/$APP_FILENAME.log 2> $APP_LOGS/$APP_FILENAME.err < /dev/null" &
 		echo PID $!
 		echo $! > $APP_PID
 		

@@ -3,10 +3,7 @@ class forumone::mailcatcher (
   $smtp_port      = '1025',
   $http_ip        = '0.0.0.0',
   $http_port      = '1080',
-  $path           = '/usr/bin',
-  $version_i18n   = '0.6.11',
-  $version_tilt   = '1.4.1',
-  $version_mailcatcher = '0.5.12'
+  $path           = '/usr/bin'
 ) {
   case $::osfamily {
     'Debian' : { $packages = ['ruby-dev', 'sqlite3', 'libsqlite3-dev', 'rubygems'] }
@@ -29,18 +26,29 @@ class forumone::mailcatcher (
   }
   , ' '))
 
-  package { $packages: ensure => 'present' } ->
-  package { 'i18n':
-    ensure   => $version_i18n,
-    provider => 'gem'
+  class { '::ruby':
+    gems_version  => 'latest'
   } ->
-  package { 'tilt':
-    ensure   => $version_tilt,
+  package { 'bundler':
     provider => 'gem'
-  } ->
-  package { 'mailcatcher':
-    ensure   => $version_mailcatcher,
-    provider => 'gem'
+  }
+
+  file { "/opt/puppet/mailcatcher": 
+    ensure => 'directory'
+  }
+
+  file { "/opt/puppet/mailcatcher/Gemfile":
+    source  => "/etc/puppet/modules/forumone/templates/mailcatcher/Gemfile",
+    require => File['/opt/puppet/mailcatcher']
+  }
+
+  ruby::bundle { 'mailcatcher':
+    cwd         => '/opt/puppet/mailcatcher',
+    subscribe   => File['/opt/puppet/mailcatcher/Gemfile'],
+    require     => Package['bundler'],
+    user        => 'root',
+    path        => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
+    refreshonly => true
   }
 
   file { "/etc/default/mailcatcher":
@@ -57,7 +65,7 @@ class forumone::mailcatcher (
     group   => "root",
     mode    => "755",
     content => template("forumone/mailcatcher/mailcatcher.erb"),
-    require => Package["mailcatcher"]
+    require => Ruby::Bundle['mailcatcher']
   }
 
   service { 'mailcatcher':
