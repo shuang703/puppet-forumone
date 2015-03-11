@@ -26,7 +26,9 @@ class forumone::mailcatcher (
   }
   , ' '))
 
-  package { $packages }
+  package { $packages: 
+    ensure  => present
+  }
 
   class { '::ruby':
     gems_version  => 'latest',
