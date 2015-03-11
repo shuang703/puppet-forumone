@@ -6,8 +6,8 @@ class forumone::mailcatcher (
   $path           = '/usr/bin'
 ) {
   case $::osfamily {
-    'Debian' : { $packages = ['ruby-dev', 'sqlite3', 'libsqlite3-dev', 'rubygems'] }
-    'Redhat' : { $packages = ['ruby-devel', 'sqlite', 'sqlite-devel', 'rubygems'] }
+    'Debian' : { $packages = ['ruby-dev', 'sqlite3', 'libsqlite3-dev'] }
+    'Redhat' : { $packages = ['ruby-devel', 'sqlite', 'sqlite-devel'] }
     default  : { fail("${::osfamily} is not supported.") }
   }
 
