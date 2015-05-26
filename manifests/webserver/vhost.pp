@@ -21,7 +21,7 @@ define forumone::webserver::vhost (
             allow_override => $allow_override
           }
           ]
-      },
+      }
       apache::vhost { "${name}-ssl":
         port    => '443',
         docroot       => $path,
@@ -31,7 +31,7 @@ define forumone::webserver::vhost (
           path           => $path,
           allow_override => $allow_override
         }
-        ]
+        ],
         ssl     => true,
       }
     } elsif $::forumone::webserver::webserver == 'nginx' {
