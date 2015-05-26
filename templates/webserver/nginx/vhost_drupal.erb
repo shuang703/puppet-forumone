@@ -70,10 +70,10 @@ server {
 server {
         server_name localhost;
 	    listen 443 ssl;
+	    ssl_certificate /etc/pki/tls/certs/localhost.crt;
+        ssl_certificate_key /etc/pki/tls/private/localhost.key;
         root <%= path %>; ## <-- Your only path reference.
 	    access_log  /var/log/nginx/<%= name %>.log  main;
-        ssl_certificate /etc/pki/tls/certs/localhost.crt;
-        ssl_certificate_key /etc/pki/tls/private/localhost.key;
         index index.html index.php;
 
         location = /favicon.ico {
