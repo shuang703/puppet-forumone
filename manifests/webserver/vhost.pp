@@ -22,6 +22,18 @@ define forumone::webserver::vhost (
           }
           ]
       }
+      apache::vhost { $name . 'ssl':
+        port    => '443',
+        docroot       => $path,
+        docroot_group => $::host_gid,
+        docroot_owner => $::host_uid,
+        directories   => [{
+          path           => $path,
+          allow_override => $allow_override
+        }
+        ]
+        ssl     => true,
+      }
     } elsif $::forumone::webserver::webserver == 'nginx' {
       if empty($source) {
         nginx::file { "${name}.conf":
@@ -38,3 +50,4 @@ define forumone::webserver::vhost (
     }
   }
 }
+
