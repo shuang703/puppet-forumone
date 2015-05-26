@@ -22,7 +22,7 @@ define forumone::webserver::vhost (
           }
           ]
       },
-      apache::vhost { $name . 'ssl':
+      apache::vhost { "${name}-ssl":
         port    => '443',
         docroot       => $path,
         docroot_group => $::host_gid,
