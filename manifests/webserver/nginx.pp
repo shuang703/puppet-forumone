@@ -1,10 +1,10 @@
 class forumone::webserver::nginx () {
-  exec {'create_self_signed_sslcert':
-    command => "openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/private/localhost.key  -x509 -days 365 -out ${certdir}/localhost.crt -subj '/CN=${::fqdn}'",
-    cwd     => $certdir,
-    creates => [ "/etc/ssl/private/localhost.key", "${certdir}/localhost.crt", ],
-    path    => ["/usr/bin", "/usr/sbin"]
-  }
+exec {'create_self_signed_sslcert':
+  command => "openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/localhost.key  -x509 -days 365 -out ${certdir}/localhost.crt -subj '/CN=${::fqdn}'",
+  cwd     => $certdir,
+  creates => [ "/etc/pki/tls/private/localhost.key", "${certdir}/$localhost.crt", ],
+  path    => ["/usr/bin", "/usr/sbin"]
+}
 
   class { '::nginx':
     http_raw_lines   => $::forumone::webserver::nginx_conf,
