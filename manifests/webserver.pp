@@ -18,6 +18,13 @@ class forumone::webserver (
   # PHP configuration
   $php_fpm_listen = "/var/run/php-fpm.sock") {
   class { "forumone::openssl": }
+  
+exec {'create_self_signed_sslcert':
+  command => "openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/localhost.key  -x509 -days 365 -out ${certdir}/localhost.crt -subj '/CN=${::fqdn}'"
+  cwd     => $certdir,
+  creates => [ "/etc/pki/tls/private/localhost.key", "${certdir}/$localhost.crt", ],
+  path    => ["/usr/bin", "/usr/sbin"]
+}
 
   if $webserver == 'apache' {
     class { "forumone::webserver::apache": }
