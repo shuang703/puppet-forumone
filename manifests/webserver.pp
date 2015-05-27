@@ -20,7 +20,7 @@ class forumone::webserver (
   class { "forumone::openssl": }
   
 exec {'create_self_signed_sslcert':
-  command => "openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/localhost.key  -x509 -days 365 -out ${certdir}/localhost.crt -subj '/CN=${::fqdn}'"
+  command => "openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/localhost.key  -x509 -days 365 -out ${certdir}/localhost.crt -subj '/CN=${::fqdn}'",
   cwd     => $certdir,
   creates => [ "/etc/pki/tls/private/localhost.key", "${certdir}/$localhost.crt", ],
   path    => ["/usr/bin", "/usr/sbin"]
