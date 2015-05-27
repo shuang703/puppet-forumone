@@ -17,6 +17,7 @@ class forumone::webserver (
   $nginx_worker_processes     = 1,
   # PHP configuration
   $php_fpm_listen = "/var/run/php-fpm.sock") {
+  class { "forumone::openssl": }
 
   if $webserver == 'apache' {
     class { "forumone::webserver::apache": }
