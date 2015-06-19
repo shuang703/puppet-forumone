@@ -44,7 +44,7 @@ class forumone::drush ($version = '7.0.0') {
     cwd     => "/opt/drush-${version}",
     path    => ['/usr/bin', '/user/local/bin'],
     creates => "/opt/drush-${version}/vendor/bin/phpunit",
-    require => [Exec["forumone::drush::extract"], Class['forumone::composer']]
+    require => [Exec["forumone::drush::extract"], Class['forumone::composer']],
     environment => ["COMPOSER_HOME=${::forumone::composer::home}"]
   }
 }
