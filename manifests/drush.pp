@@ -21,13 +21,13 @@ class forumone::drush ($version = '7.0.0') {
     creates => '/opt/drush-${version}/README.md',
   }
 
-  file { '/opt/drush-${version}':
+  file { "/opt/drush-${version}":
     ensure  => directory,
     owner   => 'vagrant',
     require => Exec['forumone::drush::extract']
   }
 
-  file { '/opt/drush-${version}/lib':
+  file { "/opt/drush-${version}/lib":
     ensure  => directory,
     owner   => 'vagrant',
     require => File['/opt/drush-${version}']
@@ -35,14 +35,14 @@ class forumone::drush ($version = '7.0.0') {
 
   file { '/usr/local/bin/drush':
     ensure  => 'link',
-    target  => '/opt/drush-${version}/drush',
+    target  => "/opt/drush-${version}/drush",
     require => Exec['forumone::drush::extract']
   }
 
   exec {'forumone::drush::composer':
     command => "composer install",
-    path => '/opt/drush-${version}',
-    creates => '/opt/drush-${version}/vendor/bin/phpunit',
+    path => "/opt/drush-${version}",
+    creates => "/opt/drush-${version}/vendor/bin/phpunit",
     require => [Exec["forumone::drush::extract"], Class['forumone::composer']]
   }
 }
