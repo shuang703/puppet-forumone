@@ -37,3 +37,45 @@ server {
 		log_not_found off;
 	}
 }
+
+server {
+	server_name localhost;
+	listen 443 ssl;
+	ssl_certificate /etc/pki/tls/certs/localhost.crt;
+    ssl_certificate_key /etc/pki/tls/private/localhost.key;
+	root <%= path %>; ## <-- Your only path reference.
+	access_log  /var/log/nginx/<%= name %>.log  main;
+
+	index index.php index.html;
+
+	location = /favicon.ico {
+		log_not_found off;
+		access_log off;
+	}
+
+	location = /robots.txt {
+		allow all;
+		log_not_found off;
+		access_log off;
+	}
+
+	location / {
+		# This is cool because no php is touched for static content
+		try_files $uri $uri/ /index.php?q=$uri&$args;
+	}
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		#NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_intercept_errors on;
+		fastcgi_pass <%= fastcgi_pass %>;
+		fastcgi_read_timeout 600;
+	}
+
+	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+		expires max;
+		log_not_found off;
+	}
+}

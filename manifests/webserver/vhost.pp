@@ -22,19 +22,35 @@ define forumone::webserver::vhost (
           }
           ]
       }
+
+      apache::vhost { "${name}-ssl":
+        port          => '443',
+        docroot       => $path,
+        docroot_group => $::host_gid,
+        docroot_owner => $::host_uid,
+        directories   => [{
+            path           => $path,
+            allow_override => $allow_override
+          }
+          ],
+        ssl           => true,
+      }
     } elsif $::forumone::webserver::webserver == 'nginx' {
       if empty($source) {
         nginx::file { "${name}.conf":
           content => inline_template(file("/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_${::platform}.erb", "/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_html.erb"
           )),
-          notify  => Service['nginx']
+          notify  => Service['nginx'],
+          require => Exec['create_self_signed_sslcert']
         }
       } else {
         nginx::file { 'localhost':
-          source => $source,
-          notify => Service['nginx']
+          source  => $source,
+          notify  => Service['nginx'],
+          require => Exec['create_self_signed_sslcert']
         }
       }
     }
   }
 }
+
