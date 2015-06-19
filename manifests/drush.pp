@@ -1,7 +1,7 @@
 class forumone::drush ($version = '7.0.0') {
   $filename = "${version}.zip"
 
-  class { 'forumone::composer': }
+  include forumone::composer
   
   # Download drush
   exec { 'forumone::drush::download':
