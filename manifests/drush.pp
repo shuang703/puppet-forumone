@@ -30,7 +30,7 @@ class forumone::drush ($version = '7.0.0') {
   file { "/opt/drush-${version}/lib":
     ensure  => directory,
     owner   => 'vagrant',
-    require => File['/opt/drush-${version}']
+    require => File["/opt/drush-${version}"]
   }
 
   file { '/usr/local/bin/drush':
