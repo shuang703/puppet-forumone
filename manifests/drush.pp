@@ -6,6 +6,7 @@ class forumone::drush ($version = '7.0.0') {
   # Download drush
   exec { 'forumone::drush::download':
     command => "wget --directory-prefix=/opt -O {$filename} https://github.com/drush-ops/drush/archive/${filename}",
+    cwd     => '/opt',
     path    => '/usr/bin',
     creates => "/opt/${filename}",
     timeout => 4800,
