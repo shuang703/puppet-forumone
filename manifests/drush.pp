@@ -2,7 +2,7 @@ class forumone::drush ($version = '7.0.0') {
   $filename = "${version}.zip"
 
   include forumone::composer
-  
+
   # Download drush
   exec { 'forumone::drush::download':
     command => "wget --directory-prefix=/opt -O ${filename} https://github.com/drush-ops/drush/archive/${filename}",
@@ -39,9 +39,10 @@ class forumone::drush ($version = '7.0.0') {
     require => Exec['forumone::drush::extract']
   }
 
-  exec {'forumone::drush::composer':
+  exec { 'forumone::drush::composer':
     command => "composer install",
-    path => ['/usr/bin', '/user/local/bin'],
+    cwd     => "/opt/drush-${version}",
+    path    => ['/usr/bin', '/user/local/bin'],
     creates => "/opt/drush-${version}/vendor/bin/phpunit",
     require => [Exec["forumone::drush::extract"], Class['forumone::composer']]
   }
