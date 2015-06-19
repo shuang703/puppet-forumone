@@ -42,6 +42,6 @@ class forumone::drush ($version = '7.0.0') {
     command => "composer install",
     path => '/opt/drush-{$version}',
     creates => '/opt/drush-{$version}/vendor/bin/phpunit',
-    require => [Exec["forumone::drush::extract"], Exec['forumone::composer']]
+    require => [Exec["forumone::drush::extract"], Class['forumone::composer']]
   }
 }
