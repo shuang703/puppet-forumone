@@ -15,7 +15,7 @@ class forumone::drush ($version = '7.0.0') {
   # extract from the archive
   exec { 'forumone::drush::extract':
     command => "unzip /opt/${filename} -d /opt",
-    path    => ["/bin", "usr/bin"],
+    path    => ["/bin", "/usr/bin"],
     require => Exec["forumone::drush::download"],
     creates => '/opt/drush-{$version}/LICENSE.txt',
   }
