@@ -1,37 +1,45 @@
-class forumone::drush ($version = '7.x-5.9') {
-  $filename = "drush-${version}.tar.gz"
+class forumone::drush ($version = '7.0.0') {
+  $filename = "${version}.zip"
 
   # Download drush
   exec { 'forumone::drush::download':
-    command => "wget --directory-prefix=/opt http://ftp.drupal.org/files/projects/${filename}",
+    command => "wget --directory-prefix=/opt -O {$filename} https://github.com/drush-ops/drush/archive/${filename}",
     path    => '/usr/bin',
     creates => "/opt/${filename}",
     timeout => 4800,
+    require => Exec["forumone::composer::install"],
   }
 
-  # extract from the solr archive
+  # extract from the archive
   exec { 'forumone::drush::extract':
-    command => "tar -zxvf /opt/${filename} -C /opt",
+    command => "unzip /opt/${filename} -d /opt",
     path    => ["/bin"],
     require => Exec["forumone::drush::download"],
-    creates => '/opt/drush/LICENSE.txt',
+    creates => '/opt/drush-{$version}/LICENSE.txt',
   }
 
-  file { '/opt/drush':
+  file { '/opt/drush-{$version}':
     ensure  => directory,
     owner   => 'vagrant',
     require => Exec['forumone::drush::extract']
   }
 
-  file { '/opt/drush/lib':
+  file { '/opt/drush-{$version}/lib':
     ensure  => directory,
     owner   => 'vagrant',
-    require => File['/opt/drush']
+    require => File['/opt/drush-{$version}']
   }
 
   file { '/usr/local/bin/drush':
     ensure  => 'link',
-    target  => '/opt/drush/drush',
+    target  => '/opt/drush-{$version}/drush',
     require => Exec['forumone::drush::extract']
+  }
+
+  exec {'forumone::drush::composer':
+    command => "composer install",
+    path => '/opt/drush-{$version}',
+    creates => '/opt/drush-{$version}/vendor/bin/phpunit',
+    require => Exec["forumone::drush::extract"],
   }
 }
