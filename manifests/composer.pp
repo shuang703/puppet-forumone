@@ -7,6 +7,6 @@ class forumone::composer(
     path    => '/usr/bin',
     creates => "/usr/bin/composer",
     timeout => 4800,
-    require => Package["${::forumone::php::prefix}-fpm"]
+    require => Class["forumone::php"]
   }
 }
