@@ -1,5 +1,6 @@
 class forumone::composer(
-  $home = '/home/vagrant/.composer'
+  $home = '/home/vagrant/.composer',
+  $user = 'vagrant'
 ) {
   # Download and install composer in one command 
   exec { 'forumone::composer::install':
