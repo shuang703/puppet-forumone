@@ -1,4 +1,8 @@
-class forumone::php ($module = [], $prefix = 'php') {
+class forumone::php (
+  $module = [], 
+  $prefix = 'php',
+  $settings = {}
+) {
   if $::forumone::webserver::webserver == 'apache' {
     $service = "httpd"
   } elsif $::forumone::webserver::webserver == 'nginx' {
@@ -6,10 +10,12 @@ class forumone::php ($module = [], $prefix = 'php') {
   }
   
   # PHP settings and modules
+  $params = hiera_hash('forumone::php::settings')
   $ini_settings = hiera_hash('php::ini', {
   }
   )
-
+  
+  $ini_settings[template] = 'forumone/php/php.ini-el6.erb'
   $ini_settings[notify] = Service[$service, 'php-fpm']
 
   $ini = {
@@ -20,7 +26,10 @@ class forumone::php ($module = [], $prefix = 'php') {
 
   $php_modules = concat(hiera_array('forumone::php::modules', []), $module)
 
-  php::module { $php_modules: notify => Service[$service, 'php-fpm'] }
+  php::module { $php_modules: 
+    notify  => Service[$service, 'php-fpm'],
+    require => Package["${::forumone::php::prefix}-fpm"]
+  }
 
   package { "${::forumone::php::prefix}-fpm": ensure => present }
 
