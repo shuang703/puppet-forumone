@@ -1,4 +1,8 @@
-class forumone::php ($module = [], $prefix = 'php') {
+class forumone::php (
+  $module = [], 
+  $prefix = 'php',
+  $settings = {}
+) {
   if $::forumone::webserver::webserver == 'apache' {
     $service = "httpd"
   } elsif $::forumone::webserver::webserver == 'nginx' {
@@ -6,10 +10,12 @@ class forumone::php ($module = [], $prefix = 'php') {
   }
   
   # PHP settings and modules
+  $::forumone::php::settings = merge({}, $settings);
+  
   $ini_settings = hiera_hash('php::ini', {
   }
   )
-
+  
   $ini_settings[template] = 'forumone/php/php.ini-el6.erb'
   $ini_settings[notify] = Service[$service, 'php-fpm']
 
