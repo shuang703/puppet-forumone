@@ -7,6 +7,7 @@ class forumone::php ($module = [], $prefix = 'php') {
   
   # PHP settings and modules
   $ini_settings = hiera_hash('php::ini', {
+    template => 'forumone/php/php.ini-el6.erb'
   }
   )
 
