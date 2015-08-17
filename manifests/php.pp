@@ -10,8 +10,6 @@ class forumone::php (
   }
   
   # PHP settings and modules
-  $::forumone::php::settings = merge({}, $settings);
-  
   $ini_settings = hiera_hash('php::ini', {
   }
   )
