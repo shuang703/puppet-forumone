@@ -20,7 +20,10 @@ class forumone::php ($module = [], $prefix = 'php') {
 
   $php_modules = concat(hiera_array('forumone::php::modules', []), $module)
 
-  php::module { $php_modules: notify => Service[$service, 'php-fpm'] }
+  php::module { $php_modules: 
+    notify  => Service[$service, 'php-fpm'],
+    require => Package["${::forumone::php::prefix}-fpm"]
+  }
 
   package { "${::forumone::php::prefix}-fpm": ensure => present }
 
