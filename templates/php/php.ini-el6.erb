@@ -1694,7 +1694,7 @@ soap.wsdl_cache_ttl=<%= @soap_wsdl_cache_ttl %>
 ; A default size of the shared memory segment
 ;sysvshm.init_mem = 10000
 
-<% scope.lookupvar('forumone::php::settings').each_pair do |key, value_hash| -%>
+<% scope.lookupvar('forumone::php::params').each_pair do |key, value_hash| -%>
 <%= key %> = <%= value_hash %>
 <% end -%>
 

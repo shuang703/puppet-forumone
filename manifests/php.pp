@@ -10,6 +10,7 @@ class forumone::php (
   }
   
   # PHP settings and modules
+  $params = hiera_hash('forumone::php::settings')
   $ini_settings = hiera_hash('php::ini', {
   }
   )
