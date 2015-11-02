@@ -1,4 +1,4 @@
-class forumone::drush ($version = '7.0.0') {
+class forumone::drush ($version = '7.1.0') {
   $filename = "${version}.zip"
 
   include forumone::composer
