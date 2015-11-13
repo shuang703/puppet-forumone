@@ -44,8 +44,8 @@ define forumone::webserver::vhost (
           require => Exec['create_self_signed_sslcert']
         }
       } else {
-        nginx::file { 'localhost':
-          source  => $source,
+        nginx::file { "${name}.conf":
+          content => inline_template(file($source)),
           notify  => Service['nginx'],
           require => Exec['create_self_signed_sslcert']
         }
