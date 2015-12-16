@@ -16,7 +16,7 @@
     {"name":"thias/memcached","version_requirement":"0.1.x"},
     {"version_requirement":"0.0.11","name":"fsalum/redis"},
     {"name":"fsalum/redis","version_requirement":"0.0.9"},
-    {"name":"puppetlabs/nodejs","version_requirement":"1.2.x"},
+    {"name":"puppetlabs/nodejs","version_requirement":"0.8.x"},
     {"name":"thias/php","version_requirement":"0.3.x"},
     {"name":"alup/rbenv","version_requirement":"1.2.x"}
   ],
