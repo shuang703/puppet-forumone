@@ -1,9 +1,10 @@
 class forumone::nodejs ($modules = ["grunt-cli"]) {
-  gpg_key{ 'nodesource':
-    ensure => present,
-    #path   => '/etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
-    path   => '/etc/puppet/modules/forumone/templates/nodejs/NODESOURCE-GPG-SIGNING-KEY-EL',
-    before => [ Yumrepo['nodesource'] ],
+  file { '/etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL':
+    ensure => file,
+    group  => 'root',
+    mode   => '0644',
+    owner  => 'root',
+    source => "puppet:///modules/${module_name}/templates/nodejs/NODESOURCE-GPG-SIGNING-KEY-EL",
   }
 
   case $::osfamily {
@@ -64,10 +65,7 @@ class forumone::nodejs ($modules = ["grunt-cli"]) {
     failovermethod => 'priority',
     gpgkey         => 'file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
     gpgcheck       => '1',
-    priority       => $priority,
-    proxy          => $proxy,
-    proxy_password => $proxy_password,
-    proxy_username => $proxy_username,
+    require        => File['/etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL'],
   }
 
   package { 'npm' :
