@@ -11,4 +11,10 @@ class forumone::composer(
     require     => Class["forumone::php"],
     environment => ["COMPOSER_HOME=${home}"],
   }
+
+  file { $home:
+    ensure => 'directory',
+    owner  => $user,
+    group  => $user
+  }
 }
