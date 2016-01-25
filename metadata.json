@@ -18,8 +18,7 @@
     {"name":"fsalum/redis","version_requirement":"0.0.9"},
     {"name":"puppetlabs/nodejs","version_requirement":"0.4.x"},
     {"name":"thias/php","version_requirement":"0.3.x"},
-    {"name":"alup/rbenv","version_requirement":"1.2.x"},
-    {"name":"sumpfgottheit/pythonel","version_requirements":"0.7.x"}
+    {"name":"alup/rbenv","version_requirement":"1.2.x"}
   ],
   "types": [],
   "checksums": {},
