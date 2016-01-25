@@ -1,5 +1,6 @@
 class forumone::python(
-  $interpreter = 'system'
+  $interpreter = 'system',
+  $pip_package = 'python-pip'
 ) {
   include "pythonel::interpreter::${interpreter}"
 
@@ -9,5 +10,9 @@ class forumone::python(
     systempkgs => true,
     owner => $::host_uid,
     group => $::host_gid
+  }
+
+  package { $pip_package:
+    ensure => installed
   }
 }
