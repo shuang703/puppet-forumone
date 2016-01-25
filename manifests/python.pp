@@ -11,8 +11,4 @@ class forumone::python(
     owner => $::host_uid,
     group => $::host_gid
   }
-
-  package { $pip_package:
-    ensure => installed
-  }
 }
