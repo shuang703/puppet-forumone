@@ -3,15 +3,15 @@ class forumone::solr ($version = "3.6.2") {
   $major_version = $version_array[0]
   $conf = "${major_version}.x"
 
-  if $major_version == "4" {
-    $filename = "solr-${version}"
-    $initd_script = "solr_jetty_7.erb"
-    $path = "/opt/${filename}/example/solr"
-  } else {
+  if $major_version == "3" {
     $filename = "apache-solr-${version}"
     $initd_script = "solr_jetty_6.erb"
     $path = "/opt/${filename}/example/multicore"
-  }
+  } else {
+    $filename = "solr-${version}"
+    $initd_script = "solr_jetty_7.erb"
+    $path = "/opt/${filename}/example/solr"
+  } 
 
   $url = "http://archive.apache.org/dist/lucene/solr/${version}/${filename}.tgz"
 
