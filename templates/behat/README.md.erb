@@ -47,6 +47,33 @@ Both included profiles have goutte enabled by default, which is the headless bro
    Scenario: I want to be able to show how to include Javascript
 ```
 
+# JENKINS INTEGRATION
+-------------------------------------
+
+## First Customize the behat.jenkins.yml file point to your respective dev and staging environments
+
+## Clone a Jenkins job, disable triggers based on git push -- this makes it so behat only runs when you manually trigger it
+
+## Select 'Add a build step' -> 'Execute Shell'
+
+### Add the text to the Execute Shell textbox
+
+```
+/usr/local/bin/phantomjs --webdriver=8643 &
+```
+
+## Select 'Add a build step' -> 'Execute Shell'
+
+### Add the text to the Execute Shell textbox
+
+```
+cd tests/behat && /usr/local/bin/composer update && cd ../../ && grunt behatJenkinsDev && killall phantomjs
+```
+
+#### CAVEAT: The command behatJenkinsDev points to the Dev Environment and behatJenkinsStage points to the Stage Environment
+
+
+
 # OPTIONAL SELENIUM GRID 2 PROFILE FEATURES
 -------------------------------------
 
