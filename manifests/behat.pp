@@ -129,6 +129,15 @@ class forumone::behat ($version = '2.5') {
       content  => template("forumone/behat/features/bootstrap/FeatureContext.php.erb")
     }
 
+    file { "${path}/tests/behat/behat.yml":
+      ensure   => present,
+      owner    => $::host_uid,
+      group    => $::host_gid,
+      mode     => "644",
+      require  => File["${path}/tests/behat"],
+      content  => template("forumone/behat/behat.yml.erb")
+    }
+    
     file { "${path}/tests/behat/behat.jenkins.yml":
       ensure   => present,
       owner    => $::host_uid,
