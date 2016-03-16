@@ -67,14 +67,10 @@ Both included profiles have goutte enabled by default, which is the headless bro
 ### Add the text to the Execute Shell textbox
 
 ```
-cd tests/behat && /usr/local/bin/composer update && cd ../../ && grunt behatJenkinsTest --buildDisplay="$JOB_NAME" && killall phantomjs
+cd tests/behat && /usr/local/bin/composer update && cd ../../ && grunt behatJenkinsDev && killall phantomjs
 ```
 
-#### CAVEAT: $JOB_NAME correlates with the Jenkins Job Name.
-
-##### The $JOB_NAME for https://jenkins.forumone.com/job/usaid/job/DAI-USAID/job/dev-behat/configure is 'dev-behat' aka the Project Name
-##### the $JOB_NAME is matched against the grunt behatJenkinsTest in the project Gruntfile.js.
-##### In order to match correctly you will need to make sure that grunt is matching properly on your environments by customizing the string you are searching for in the Gruntfile.js
+#### CAVEAT: The command behatJenkinsDev points to the Dev Environment and behatJenkinsStage points to the Stage Environment
 
 
 
