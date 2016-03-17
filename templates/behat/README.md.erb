@@ -19,15 +19,25 @@ https://www.youtube.com/watch?v=NsI8kPc3kBA
 
 The behat.yml file comes with two default profiles, 'default' and 'selenium'.
 
-The default profile uses phantomjs to perform Behat tests via a headless browser. PhantomJS listens on the 8643 port
+The default profile uses phantomjs to perform Behat tests via a headless browser. PhantomJS listens on the 8643 port:
+
 ```
  wd_host:              'http://127.0.0.1:8643/wd/hub'
 ```
+
+You must start phantomjs before you are able to run any tests that requires it:
+
+```
+/usr/local/bin/phantomjs --webdriver=8643 &
+```
+
 The selenium profile uses the option java .jar file to run tests with the existing browsers on your local machine. Selenium listens on the 5555 port
 
 ```
   wd_host:              'http://127.0.0.1:5555/wd/hub'
 ```
+
+See the Selenium 2 Information below on how to start Selenium Grid
 
 Using the bin/behat -dl you can see the available steps that you can use to write tests
 
@@ -69,10 +79,22 @@ Both included profiles have goutte enabled by default, which is the headless bro
    Scenario: I want to be able to show how to include Javascript
 ```
 
+# BEHAT-GRUNT PLUGIN
+-------------------------------------
+## Webstarter includes the Behat-Grunt Plugin which can run multiple behat tests and export the results to a JUNIT XML file
+
+## Your default webstarter install comes with two behat-grunt tasks
+
+### behatLocal which runs behat jobs against phantomJS
+
+### behatLocalSelenium which runs behat jobs against the selenium grid system
+
 # JENKINS INTEGRATION
 -------------------------------------
 
-## First Customize the behat.jenkins.yml file point to your respective dev and staging environments
+## Jenkins runs behat with the behat-grunt plugin. Make sure that your behat tests work wth the behat-grunt plugin prior to pushing them up to Jenkins
+
+## First Customize the behat.jenkins.yml file point to your respective dev and staging urls
 
 ## Clone a Jenkins job, disable triggers based on git push -- this makes it so behat only runs when you manually trigger it
 
