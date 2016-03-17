@@ -111,6 +111,14 @@ class forumone::behat ($version = '2.5') {
       content  => template("forumone/behat/features/TESTS/test.feature.erb")
     }
 
+    file { "${path}/tests/behat/features/TESTS":
+      ensure   => directory,
+      owner    => $::host_uid,
+      group    => $::host_gid,
+      mode     => "644",
+      require  => File["${path}/tests/behat/features"],
+    }
+
     file { "${path}/tests/behat/features/TESTS/test-js.feature":
       ensure   => present,
       owner    => $::host_uid,
