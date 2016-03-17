@@ -24,6 +24,14 @@ class forumone::behat ($version = '2.5') {
       require  => File["${path}/tests"]
     }
 
+    file { "${path}/tests/test_results":
+      ensure   => directory,
+      owner    => $::host_uid,
+      group    => $::host_gid,
+      mode     => "644",
+      require  => File["${path}/tests"]
+    }
+
     # Download drush
     exec { 'forumone::behat::phantomjs::download':
       command => "wget --directory-prefix=/opt -O ${phantomjs_file}  https://bitbucket.org/ariya/phantomjs/downloads/${phantomjs_file}",
