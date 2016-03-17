@@ -108,7 +108,7 @@ class forumone::behat ($version = '2.5') {
       group    => $::host_gid,
       mode     => "644",
       require  => File["${path}/tests/behat/features"],
-      content  => template("forumone/behat/features/test.feature.erb")
+      content  => template("forumone/behat/features/TEST/test.feature.erb")
     }
 
     file { "${path}/tests/behat/features/test-js.feature":
@@ -117,7 +117,7 @@ class forumone::behat ($version = '2.5') {
       group    => $::host_gid,
       mode     => "644",
       require  => File["${path}/tests/behat/features"],
-      content  => template("forumone/behat/features/test-js.feature.erb")
+      content  => template("forumone/behat/features/TEST/test-js.feature.erb")
     }
 
     file { "${path}/tests/behat/features/bootstrap/FeatureContext.php":

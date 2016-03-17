@@ -31,6 +31,28 @@ The selenium profile uses the option java .jar file to run tests with the existi
 
 Using the bin/behat -dl you can see the available steps that you can use to write tests
 
+# WRITING TESTS
+-------------------------------------
+When writing tests, make sure to add your test .feature files to folders created under the tests/behat/features folder:
+
+The purpose of adding a 'sub' folder is for the grunt-behat tasks, which are configured to look for all feature files under tests/behat/features/sub-folder/*
+
+Example:
+
+```
+- tests
+    - behat
+        - features
+            - CRUD
+                - node_create.feature
+            - VIEWS
+                - view1.feature
+            - PANELS
+                - panel1.feature
+                - panel2.feature
+
+```
+
 When writing tests within feature files make sure to include the @api for making drush available in a feature:
 
 ```
