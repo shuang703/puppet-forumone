@@ -102,22 +102,22 @@ class forumone::behat ($version = '2.5') {
       require  => File["${path}/tests/behat/features"],
     }
 
-    file { "${path}/tests/behat/features/test.feature":
+    file { "${path}/tests/behat/features/TEST/test.feature":
       ensure   => present,
       owner    => $::host_uid,
       group    => $::host_gid,
       mode     => "644",
       require  => File["${path}/tests/behat/features"],
-      content  => template("forumone/behat/features/TEST/test.feature.erb")
+      content  => template("forumone/behat/features/test.feature.erb")
     }
 
-    file { "${path}/tests/behat/features/test-js.feature":
+    file { "${path}/tests/behat/features/TEST/test-js.feature":
       ensure   => present,
       owner    => $::host_uid,
       group    => $::host_gid,
       mode     => "644",
       require  => File["${path}/tests/behat/features"],
-      content  => template("forumone/behat/features/TEST/test-js.feature.erb")
+      content  => template("forumone/behat/features/test-js.feature.erb")
     }
 
     file { "${path}/tests/behat/features/bootstrap/FeatureContext.php":
