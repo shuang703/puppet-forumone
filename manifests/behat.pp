@@ -14,6 +14,7 @@ class forumone::behat ($version = '2.5') {
       owner    => $::host_uid,
       group    => $::host_gid,
       mode     => "644",
+      require  => File["${path}"]
     }
 
     file { "${path}/tests/behat":
