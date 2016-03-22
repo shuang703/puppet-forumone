@@ -13,6 +13,20 @@ This setup includes the following components:
 This is a **work in progress**: Please note that there are many pieces that can change overtime.
 
 
+## Verify Installation
+
+Once Web Starter has been provisioned and you have created your Drupal site within it, you should be able to immediately run one of the default tests included in this quick-start:
+
+```
+$ vagrant ssh
+$ bin/behat features/test.feature  -p local-selenium
+```
+
+You should see output including the scenario and steps passed.
+
+(For the other default test included in this quick-start, see the Selenium instructions below.)
+
+
 ## Usage
 
 The behat.yml file comes with two default profiles, 'default' and 'selenium'.
@@ -137,7 +151,7 @@ Web Starter by default comes with two behat-grunt tasks:
 
  ```
  $ vagrant ssh
- $ bin/behat features/TEST/test-js.feature  -p local-selenium
+ $ bin/behat features/test-js.feature  -p local-selenium
  ```
 
 
