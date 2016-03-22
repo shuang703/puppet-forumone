@@ -225,7 +225,6 @@ class forumone::behat ($version = '2.5') {
       creates     => $composer_lock,
       require     => [Class['forumone::composer'], File["${path}/tests/behat/composer.json"]],
       environment => ["COMPOSER_HOME=${::forumone::composer::home}"],
-      user        => $::forumone::composer::user,
       timeout     => 1800
     }
   }
