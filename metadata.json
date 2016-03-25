@@ -1,6 +1,6 @@
 {
   "name": "puppet-forumone",
-  "version": "1.1.37",
+  "version": "1.1.38",
   "summary": "Forum One puppet module for development",
   "author": "William Hurley",
   "description": "Creates an idiosyncratic development environment for PHP or Javascript development",
@@ -16,7 +16,7 @@
     {"name":"thias/memcached","version_requirement":"0.1.x"},
     {"version_requirement":"0.0.11","name":"fsalum/redis"},
     {"name":"fsalum/redis","version_requirement":"0.0.9"},
-    {"name":"puppetlabs/nodejs","version_requirement":"0.4.x"},
+    {"name":"willdurand/nodejs","version_requirement":"1.8.x"},
     {"name":"thias/php","version_requirement":"0.3.x"},
     {"name":"alup/rbenv","version_requirement":"1.2.x"}
   ],
