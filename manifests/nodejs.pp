@@ -1,4 +1,4 @@
-class forumone::nodejs ($modules = ["grunt-cli"], $version = 'v0.12.9') {
+class forumone::nodejs ($modules = ["grunt-cli", "bower"], $version = 'v4.4.1') {
   class { '::nodejs':
     version	 => $version,
     make_install => false,
