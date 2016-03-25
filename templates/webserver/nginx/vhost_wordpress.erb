@@ -72,6 +72,7 @@ server {
 		fastcgi_intercept_errors on;
 		fastcgi_pass <%= fastcgi_pass %>;
 		fastcgi_read_timeout 600;
+    fastcgi_param  HTTPS 'on';
 	}
 
 	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {

@@ -1,6 +1,7 @@
 class forumone::webserver (
   $webserver      = "nginx",
   $port           = "8080",
+  $platform       = $::platform,
   # Apache configuration
   $apache_startservers        = 8,
   $apache_minspareservers     = 5,

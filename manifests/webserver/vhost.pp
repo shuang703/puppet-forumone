@@ -38,7 +38,7 @@ define forumone::webserver::vhost (
     } elsif $::forumone::webserver::webserver == 'nginx' {
       if empty($source) {
         nginx::file { "${name}.conf":
-          content => inline_template(file("/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_${::platform}.erb", "/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_html.erb"
+          content => inline_template(file("/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_${::forumone::webserver::platform}.erb", "/etc/puppet/modules/forumone/templates/webserver/nginx/vhost_html.erb"
           )),
           notify  => Service['nginx'],
           require => Exec['create_self_signed_sslcert']
