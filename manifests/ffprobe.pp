@@ -7,7 +7,7 @@ class forumone::ffprobe () {
     exec { "forumone::ffprobe::download":
         command => "wget --directory-prefix=/tmp ${url}",
         path => "/usr/bin",
-        creates => "/tmp/${flename}",
+        creates => "/tmp/${filename}",
         timeout => 4800,
     }
 
