@@ -1,16 +1,12 @@
-class forumone::nodejs ($modules = ["grunt-cli"]) {
-  case $::operatingsystem {
-    /(?i:redhat|centos)/ : {
-      package { 'npm': require => Class['epel'] }
-    }
-    /(?i:debian|ubuntu)/ : {
-      package { 'npm': require => Anchor['apt::ppa::ppa:chris-lea/node.js-legacy'] }
-    }
+class forumone::nodejs ($modules = ["grunt-cli", "bower"], $version = 'v4.4.1') {
+  class { '::nodejs':
+    version	 => $version,
+    make_install => false,
   }
 
   package { $modules:
     ensure   => present,
     provider => 'npm',
-    require  => Package['npm']
+    require  => Class['::nodejs']
   }
 }
