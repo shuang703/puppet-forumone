@@ -1,6 +1,6 @@
 class forumone::drush ($version = '7.1.0') {
   $filename = "${version}.zip"
-  $version_Array = split(${version}, '[.]')
+  $version_array = split($version, '[.]')
   $major_version = $version_array[0]
 
   include forumone::composer
