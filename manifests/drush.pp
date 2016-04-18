@@ -41,7 +41,7 @@ class forumone::drush ($version = '7.1.0') {
     require => Exec['forumone::drush::extract']
   }
 
-unless ${forumone::drush::major_version} < 7 {
+unless $forumone::drush::major_version < 7 {
   exec { 'forumone::drush::composer':
     command => "composer install",
     cwd     => "/opt/drush-${version}",
