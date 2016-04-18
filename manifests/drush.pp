@@ -1,5 +1,7 @@
 class forumone::drush ($version = '7.1.0') {
   $filename = "${version}.zip"
+  $version_Array = split($version, '[.]')
+  $major_version = $version_array[0]
 
   include forumone::composer
 
@@ -39,6 +41,7 @@ class forumone::drush ($version = '7.1.0') {
     require => Exec['forumone::drush::extract']
   }
 
+unless ${major_version} < 7 {
   exec { 'forumone::drush::composer':
     command => "composer install",
     cwd     => "/opt/drush-${version}",
@@ -47,5 +50,6 @@ class forumone::drush ($version = '7.1.0') {
     require => [Exec["forumone::drush::extract"], Class['forumone::composer']],
     environment => ["COMPOSER_HOME=${::forumone::composer::home}", "HOME=${::forumone::composer::home}"],
     user    => $::forumone::composer::user,
+  }
   }
 }
